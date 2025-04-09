@@ -18,7 +18,7 @@ json_input=$(cat)  # Read JSON input from stdin
 export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
 export object_path=$(echo $json_input | jq -r .source.object_path )
 export debug=$(echo $json_input | jq -r .source.debug )
-export src=$(echo $json_input | jq -r .param.src )
+export src=$(echo $json_input | jq -r .params.src )
 
 
 if [ "$debug" = true ] ; then
