@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+export directory=$1
+
+json_input=$(cat)  # Read JSON input from stdin
+# {
+#     "source": {
+#       "bucket_name": "mybucket",
+#       "object_name": "myobject",
+#       "debug": true,          
+#     },
+#    "params": {
+#       "src": "path/to/my_local_file.txt"
+#     }
+# }
+
+export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
+export object_path=$(echo $json_input | jq -r .source.object_path )
+export debug=$(echo $json_input | jq -r .source.debug )
+export src=$(echo $json_input | jq -r .param.src )
+
+
+if [ "$debug" = true ] ; then
+    >&2 echo "cp \"$directory/$src\" \"gs://${bucket_name}/${object_path}\""
+fi
+
+gcloud storage cp "$directory/$src" "gs://${bucket_name}/${object_path}"  

@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+json_input=$(cat)  # Read JSON input from stdin
+# {
+#     "source": {
+#       "bucket_name": "mybucket",
+#       "object_path": "path/to/myobject", 
+#       "debug": true,       
+#     },
+#     "version": {
+#         "ref": "61cbef"
+#     }
+# }
+
+export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
+export object_path=$(echo $json_input | jq -r .source.object_path )
+export debug=$(echo $json_input | jq -r .source.debug )
+export version=$(echo $json_input | jq -r .version.ref )
+
+if [ "$debug" = true ] ; then
+    >&2 echo "gcloud storage objects describe \"gs://${bucket_name}/${object_path}\""
+    >&2 gcloud storage objects describe "gs://${bucket_name}/${object_path}"
+fi
+
+current_version=gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation
+
+## And we will output...
+# The list with all versions after 62cbef
+# 
+# [
+#   { "ref": "61cbef" },
+#   { "ref": "d74e01" },
+#   { "ref": "7154fe" }
+# ]
+#
+# Or alternatively return just the latest (not the best solution because it doesn't allow pinning)
+# 
+##
+echo "[ { \"ref\": \"${current_version}\" } ]"

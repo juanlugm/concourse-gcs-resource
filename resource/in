@@ -1,0 +1,65 @@
+#!/bin/bash
+set -e
+
+export directory=$1
+
+json_input=$(cat)  # Read JSON input from stdin
+# {
+#     "source": {
+#       "bucket_name": "mybucket",
+#       "object_name": "myobject",
+#       "debug": true,          
+#     },
+#     "version": {
+#         "ref": "61cbef"
+#     }
+# }
+
+export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
+export object_path=$(echo $json_input | jq -r .source.object_path )
+export debug=$(echo $json_input | jq -r .source.debug )
+export version=$(echo $json_input | jq -r .version.ref )
+
+#### And the output will be
+#
+# {
+#   "version": { "ref": "61cebf" },
+#   "metadata": [
+#     { "name": "commit", "value": "61cebf" },
+#     { "name": "author", "value": "Hulk Hogan" }
+#   ]
+# }
+#
+
+current_version=gcloud storage objects describe "gs://${bucket_name}/${object_path}#${version}" > object_metadata.yml
+creation_time=$(cat object_metadata.yml | yq .creation_time)
+update_time=$(cat object_metadata.yml | yq .update_time)
+md5_hash=$(cat object_metadata.yml | yq .md5_hash)
+metageneration=$(cat object_metadata.yml | yq .metageneration)
+storage_url=$(cat object_metadata.yml | yq .storage_url)
+size=$(cat object_metadata.yml | yq .size)
+
+
+if [ "$(cat object_metadata.yml | yq .generation)" == "$version" ]; then
+    output_string="{ \"version\": {\"ref\": \"${version}\"}, \
+    \"metadata\": [ \
+    { \"name\": \"creation_time\", \"value\": \"${creation_time}\"}, \
+    { \"name\": \"update_time\", \"value\": \"${update_time}\"}, \
+    { \"name\": \"md5_hash\", \"value\": \"${md5_hash}\"}, \
+    { \"name\": \"metageneration\", \"value\": \"${metageneration}\"}, \
+    { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
+    { \"name\": \"size\", \"value\": \"${size}\"}, \
+    ] }"
+    if [ "$debug" = true ] ; then
+        >&2 echo $output_string
+    fi
+    echo $output_string
+else
+    >&2 echo "We are unable to retrieve the metadata for this version. It may not exist anymore"
+    exit 1
+fi
+
+
+#### We also need to download the object to $1 folder.
+
+gcloud storage cp "$storage_url" "$directory"  
