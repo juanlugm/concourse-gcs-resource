@@ -31,7 +31,15 @@ export version=$(echo $json_input | jq -r .version.ref )
 # }
 #
 
+if [ "$debug" = true ] ; then
+    >&2 echo "gcloud storage objects describe \"gs://${bucket_name}/${object_path}\""
+fi
+
 gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
+
+if [ "$debug" = true ] ; then
+    >&2 cat object_metadata.yml
+fi
 
 current_version=$(cat object_metadata.yml | yq .generation)
 creation_time=$(cat object_metadata.yml | yq .creation_time)
