@@ -55,7 +55,7 @@ output_string="{
   ]
 }"
 
- if [ "$debug" = true ] ; then
-        >&2 echo $output_string
-    fi
-    echo $output_string
+if [ "$debug" = true ] ; then
+    >&2 echo $output_string
+fi
+echo $output_string
