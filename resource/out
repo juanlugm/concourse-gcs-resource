@@ -54,3 +54,8 @@ output_string="{
     { \"name\": \"size\", \"value\": \"${size}\"} \
   ]
 }"
+
+ if [ "$debug" = true ] ; then
+        >&2 echo $output_string
+    fi
+    echo $output_string
