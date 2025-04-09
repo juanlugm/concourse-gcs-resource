@@ -20,6 +20,25 @@ export object_path=$(echo $json_input | jq -r .source.object_path )
 export debug=$(echo $json_input | jq -r .source.debug )
 export version=$(echo $json_input | jq -r .version.ref )
 
+
+if [ "$debug" = true ] ; then
+    >&2 echo "In"
+    >&2 echo $json_input
+    >&2 echo "gcloud storage objects describe \"gs://${bucket_name}/${object_path}\""
+fi
+
+if [ -z "${version}" ]; then
+    >&2 echo "No previous version. Checking latest"
+    gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
+else
+    gcloud storage objects describe "gs://${bucket_name}/${object_path}#${version}" > object_metadata.yml
+fi
+
+
+if [ "$debug" = true ] ; then
+    >&2 cat object_metadata.yml
+fi
+
 #### And the output will be
 #
 # {
@@ -31,15 +50,6 @@ export version=$(echo $json_input | jq -r .version.ref )
 # }
 #
 
-if [ "$debug" = true ] ; then
-    >&2 echo "gcloud storage objects describe \"gs://${bucket_name}/${object_path}\""
-fi
-
-gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
-
-if [ "$debug" = true ] ; then
-    >&2 cat object_metadata.yml
-fi
 
 current_version=$(cat object_metadata.yml | yq .generation)
 creation_time=$(cat object_metadata.yml | yq .creation_time)
@@ -51,7 +61,7 @@ size=$(cat object_metadata.yml | yq .size)
 
 
 if [ "$(cat object_metadata.yml | yq .generation)" == "$version" ]; then
-    output_string="{ \"version\": {\"ref\": \"${version}\"}, \
+    echo "{ \"version\": {\"ref\": \"${version}\"}, \
     \"metadata\": [ \
     { \"name\": \"creation_time\", \"value\": \"${creation_time}\"}, \
     { \"name\": \"update_time\", \"value\": \"${update_time}\"}, \
@@ -60,10 +70,7 @@ if [ "$(cat object_metadata.yml | yq .generation)" == "$version" ]; then
     { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
     { \"name\": \"size\", \"value\": \"${size}\"} \
     ] }"
-    if [ "$debug" = true ] ; then
-        >&2 echo $output_string
-    fi
-    echo $output_string
+
 else
     >&2 echo "We are unable to retrieve the metadata for this version. It may not exist anymore"
     exit 1

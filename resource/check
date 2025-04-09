@@ -13,17 +13,25 @@ json_input=$(cat)  # Read JSON input from stdin
 #     }
 # }
 
+if [ "$debug" = true ] ; then
+    >&2 echo "Check..."
+    >&2 cat $json_input
+fi
+
 export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
 export object_path=$(echo $json_input | jq -r .source.object_path )
 export debug=$(echo $json_input | jq -r .source.debug )
 export version=$(echo $json_input | jq -r .version.ref )
 
-if [ "$debug" = true ] ; then
-    >&2 echo "gcloud storage objects describe \"gs://${bucket_name}/${object_path}\""
-    >&2 gcloud storage objects describe "gs://${bucket_name}/${object_path}"
+
+
+if [ -z "${version}" ]; then
+    >&2 echo "No previous version. Checking latest"
+    current_version=$(gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation)
+else
+    current_version=$(gcloud storage objects describe "gs://${bucket_name}/${object_path}#${version}" | yq .generation)
 fi
 
-current_version=$(gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation)
 
 ## And we will output...
 # The list with all versions after 62cbef
