@@ -26,3 +26,31 @@ if [ "$debug" = true ] ; then
 fi
 
 gcloud storage cp "$directory/$src" "gs://${bucket_name}/${object_path}"  
+
+current_version=gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation
+creation_time=$(cat object_metadata.yml | yq .creation_time)
+update_time=$(cat object_metadata.yml | yq .update_time)
+md5_hash=$(cat object_metadata.yml | yq .md5_hash)
+metageneration=$(cat object_metadata.yml | yq .metageneration)
+storage_url=$(cat object_metadata.yml | yq .storage_url)
+size=$(cat object_metadata.yml | yq .size)
+
+# {
+#   "version": { "ref": "61cebf" },
+#   "metadata": [
+#     { "name": "commit", "value": "61cebf" },
+#     { "name": "author", "value": "Mick Foley" }
+#   ]
+# }
+
+output_string="{
+  \"version\": { \"ref\": \"${current_version}\" },
+  \"metadata\": [
+    { \"name\": \"creation_time\", \"value\": \"${creation_time}\"}, \
+    { \"name\": \"update_time\", \"value\": \"${update_time}\"}, \
+    { \"name\": \"md5_hash\", \"value\": \"${md5_hash}\"}, \
+    { \"name\": \"metageneration\", \"value\": \"${metageneration}\"}, \
+    { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
+    { \"name\": \"size\", \"value\": \"${size}\"} \
+  ]
+}"

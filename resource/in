@@ -48,7 +48,7 @@ if [ "$(cat object_metadata.yml | yq .generation)" == "$version" ]; then
     { \"name\": \"md5_hash\", \"value\": \"${md5_hash}\"}, \
     { \"name\": \"metageneration\", \"value\": \"${metageneration}\"}, \
     { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
-    { \"name\": \"size\", \"value\": \"${size}\"}, \
+    { \"name\": \"size\", \"value\": \"${size}\"} \
     ] }"
     if [ "$debug" = true ] ; then
         >&2 echo $output_string
