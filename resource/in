@@ -31,7 +31,9 @@ export version=$(echo $json_input | jq -r .version.ref )
 # }
 #
 
-current_version=gcloud storage objects describe "gs://${bucket_name}/${object_path}#${version}" > object_metadata.yml
+gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
+
+current_version=$(cat object_metadata.yml | yq .generation)
 creation_time=$(cat object_metadata.yml | yq .creation_time)
 update_time=$(cat object_metadata.yml | yq .update_time)
 md5_hash=$(cat object_metadata.yml | yq .md5_hash)

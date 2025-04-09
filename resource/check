@@ -23,7 +23,7 @@ if [ "$debug" = true ] ; then
     >&2 gcloud storage objects describe "gs://${bucket_name}/${object_path}"
 fi
 
-current_version=gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation
+current_version=$(gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation)
 
 ## And we will output...
 # The list with all versions after 62cbef

@@ -27,7 +27,10 @@ fi
 
 gcloud storage cp "$directory/$src" "gs://${bucket_name}/${object_path}"  
 
-current_version=gcloud storage objects describe "gs://${bucket_name}/${object_path}" | yq .generation
+
+gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
+
+current_version=$( | yq .generation)
 creation_time=$(cat object_metadata.yml | yq .creation_time)
 update_time=$(cat object_metadata.yml | yq .update_time)
 md5_hash=$(cat object_metadata.yml | yq .md5_hash)
