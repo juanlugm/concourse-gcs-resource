@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.10...v1.0.11) (2025-04-10)
+
+
+### Bug Fixes
+
+* resource check when file is not found ([5284167](https://github.com/juanlugm/concourse-gcs-resource/commit/52841671cc4478fb28ce5f0c17b1f916f3ac49d3))
+
 ## [1.0.10](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.9...v1.0.10) (2025-04-10)
 
 
