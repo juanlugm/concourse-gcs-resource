@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.6...v1.0.7) (2025-04-10)
+
+
+### Bug Fixes
+
+* issues with check debugging ([59563f1](https://github.com/juanlugm/concourse-gcs-resource/commit/59563f1e6f321482cafcc279d58e70bddfdadf79))
+
 ## [1.0.6](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.5...v1.0.6) (2025-04-10)
 
 
