@@ -24,6 +24,8 @@ json_input=$(cat)  # Read JSON input from stdin
 #     }
 # }
 
+validate_inputs $json_input && exit 1
+
 export bucket=$(echo $json_input | jq -r .source.bucket )
 export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
 export debug=$(echo $json_input | jq -r .source.debug )

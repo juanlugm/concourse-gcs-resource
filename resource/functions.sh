@@ -1,5 +1,23 @@
 #!/bin/bash
 
+validate_inputs() {
+
+    INPUTS="$1"
+
+    bucket=$(echo $INPUTS | jq -r .source.bucket )
+    versioned_file=$(echo $INPUTS | jq -r .source.versioned_file )
+
+    if [ -z "${bucket}" -o "${bucket}" == "null" ]; then
+       >&2  echo "source bucket is mandatory"
+       return 1
+    fi
+
+    if [ -z "${versioned_file}" -o "${versioned_file}" == "null" ]; then
+        >&2  echo "versioned_file is mandatory"
+       return 1
+    fi
+}
+
 extract() {
   set -e
 
