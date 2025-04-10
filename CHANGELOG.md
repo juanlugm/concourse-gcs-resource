@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.12...v1.0.13) (2025-04-10)
+
+
+### Bug Fixes
+
+* initial version content ([ecb3468](https://github.com/juanlugm/concourse-gcs-resource/commit/ecb346882b912d96b72872109de9dc3d56e4ab2a))
+
 ## [1.0.12](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.11...v1.0.12) (2025-04-10)
 
 
