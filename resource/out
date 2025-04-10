@@ -33,7 +33,7 @@ export file=$(echo $json_input | jq -r .params.file )
 
 
 if [ "${debug}" = true ] ; then
-    >&2 echo "cp \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
+    >&2 echo "gcloud cp -r \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
 
 gcloud storage cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"  
