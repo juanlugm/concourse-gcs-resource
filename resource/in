@@ -61,13 +61,13 @@ if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
         >&2 cat object_metadata.yml
     fi
 else
-    if [ -n "${initial_version}"]; then
+    if [ -n "${initial_version}" -a "${initial_version}" != "null" ]; then
         >&2 echo "Failed to retrieve object. Falling back to initial_version"
         touch $directory/$filename
         echo "{ \"version\": {\"ref\": \"${initial_version}\"}}"
-        if [ -n "${initial_content_text}"]; then
+        if [ -n "${initial_content_text}" -a "${initial_content_text}" != "null" ]; then
             echo "${initial_content_text}" > $directory/$filename
-        elif [ -n "${initial_content_text}"]; then
+        elif [ -n "${initial_content_text}" ]; then
             base64 -d <<< "${initial_content_binary}" > $1/$filename
         fi
         exit 0
