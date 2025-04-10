@@ -34,7 +34,7 @@ export skip_download=$(echo $json_input | jq -r .params.skip_download )
 export version=$(echo $json_input | jq -r .version.ref )
 
 
-if [ "$debug" = true ] ; then
+if [ "${debug}" = true ] ; then
     >&2 echo "In"
     >&2 echo $json_input
 fi
@@ -60,7 +60,7 @@ if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
 fi
 
 
-if [ "$debug" = true ] ; then
+if [ "${debug}" = true ] ; then
     >&2 cat object_metadata.yml
 fi
 
@@ -103,9 +103,9 @@ fi
 
 
 #### We also need to download the object to $1 folder unless we are told the opposite
-if [ -z "${skip_download}" ]; then
+if [ "${skip_download}"  != true ]; then
     gcloud storage cp "$storage_url" "$directory"
-    if [ -z "${unpack}" ]; then
+    if [ "${unpack}"  = true ]; then
         extract "$directory/$filename" "$directory"
     fi
 else

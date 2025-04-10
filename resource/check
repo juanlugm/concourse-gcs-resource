@@ -13,7 +13,7 @@ json_input=$(cat)  # Read JSON input from stdin
 #     }
 # }
 
-if [ "$debug" = true ] ; then
+if [ "${debug}" = true ] ; then
     >&2 echo "Check..."
     >&2 cat $json_input
 fi

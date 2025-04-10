@@ -21,7 +21,7 @@ export debug=$(echo $json_input | jq -r .source.debug )
 export file=$(echo $json_input | jq -r .params.file )
 
 
-if [ "$debug" = true ] ; then
+if [ "${debug}" = true ] ; then
     >&2 echo "cp \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
 
@@ -58,7 +58,7 @@ output_string="{
   ]
 }"
 
-if [ "$debug" = true ] ; then
+if [ "${debug}" = true ] ; then
     >&2 echo $output_string
 fi
 echo $output_string
