@@ -1,3 +1,10 @@
+## [1.0.21](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.20...v1.0.21) (2025-04-10)
+
+
+### Bug Fixes
+
+* add more logs in debug mode ([bfa8438](https://github.com/juanlugm/concourse-gcs-resource/commit/bfa8438b38f8c524d7549376412db5bec62a0b35))
+
 ## [1.0.20](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.19...v1.0.20) (2025-04-10)
 
 
