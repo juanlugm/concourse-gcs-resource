@@ -56,6 +56,9 @@ if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
             base64 -d <<< "${initial_content_binary}" > $1/$filename
         fi
         exit 0
+    else
+      >&2 echo "Failed to retrieve object metadata and there is no initial version specified in source"
+      exit 1
     fi    
 fi
 
