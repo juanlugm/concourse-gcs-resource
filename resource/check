@@ -39,6 +39,11 @@ fi
  >&2 echo "${gs_url}"
 
 if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
+    if [ "${debug}" = true ] ; then
+        >&2 cat object_metadata.yml
+    fi
+    current_version=$(cat object_metadata.yml | yq .generation)
+else
     if [ -n "${initial_version}"  -a "${initial_version}" != "null"]; then
       >&2 echo "Failed to retrieve object. Falling back to initial_version"
       current_version=$initial_version
@@ -46,8 +51,6 @@ if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
       >&2 echo "Failed to retrieve object and there is no initial version specified in source"
       exit 1
     fi
-else
-    current_version=$(cat object_metadata.yml | yq .generation)
 fi
 
 ## And we will output...
