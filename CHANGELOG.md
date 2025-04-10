@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.1...v1.0.2) (2025-04-10)
+
+
+### Bug Fixes
+
+* Add github release plugin to workflow ([f06eff9](https://github.com/juanlugm/concourse-gcs-resource/commit/f06eff966b58ae3632fd22d1320583e5c26fe356))
+* missing release version variable in workflow ([98984d2](https://github.com/juanlugm/concourse-gcs-resource/commit/98984d29121231b64afc4514bbca0a43d1004a5f))
+* remove semantic-release github plugin ([76f8f9e](https://github.com/juanlugm/concourse-gcs-resource/commit/76f8f9e66828fadb2ccc77a175b08945f41830c3))
+
 ## [1.0.1](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.0...v1.0.1) (2025-04-10)
 
 
