@@ -40,6 +40,7 @@ export initial_version=$(echo $json_input | jq -r .source.initial_version )
 export initial_content_text=$(echo $json_input | jq -r .source.initial_content_text )
 export initial_content_binary=$(echo $json_input | jq -r .source.initial_content_binary )
 export skip_download=$(echo $json_input | jq -r .params.skip_download )
+export unpack=$(echo $json_input | jq -r .params.unpack )
 export version=$(echo $json_input | jq -r .version.ref )
 
 
