@@ -57,6 +57,10 @@ if [ -n "${version}" ]; then
 fi
 
 if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
+    if [ "${debug}" = true ] ; then
+        >&2 cat object_metadata.yml
+    fi
+else
     if [ -n "${initial_version}"]; then
         >&2 echo "Failed to retrieve object. Falling back to initial_version"
         touch $directory/$filename
@@ -73,10 +77,6 @@ if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
     fi    
 fi
 
-
-if [ "${debug}" = true ] ; then
-    >&2 cat object_metadata.yml
-fi
 
 #### And the output will be
 #
