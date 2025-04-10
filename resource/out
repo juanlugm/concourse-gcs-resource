@@ -22,7 +22,7 @@ json_input=$(cat)  # Read JSON input from stdin
 export debug=$(echo $json_input | jq -r .source.debug )
 
 if [ "${debug}" = true ] ; then
-    >&2 cat $json_input
+    >&2 echo $json_input
 fi
 
 validate_inputs $json_input && exit 1
