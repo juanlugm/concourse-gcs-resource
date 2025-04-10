@@ -27,12 +27,12 @@ export version=$(echo $json_input | jq -r .version.ref )
 
 gs_url="gs://${bucket}/${versioned_file}"
 
-if [ -n "${version}" ]; then
+if [ -n "${version}" -a "${version}" != "null" ]; then
     gs_url="${gs_url}#${version}"
 fi
 
 if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
-    if [ -n "${initial_version}"]; then
+    if [ -n "${initial_version}"  -a "${initial_version}" != "null"]; then
       >&2 echo "Failed to retrieve object. Falling back to initial_version"
       current_version=$initial_version
     else
