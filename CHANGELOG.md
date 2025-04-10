@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.2...v1.0.3) (2025-04-10)
+
+
+### Bug Fixes
+
+* Abort check when fails to retrieve and there is no initial version ([cb6816a](https://github.com/juanlugm/concourse-gcs-resource/commit/cb6816ac4fb282ba3120521623e593e18ce98c30))
+
 ## [1.0.2](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.1...v1.0.2) (2025-04-10)
 
 
