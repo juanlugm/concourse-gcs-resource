@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.3...v1.0.4) (2025-04-10)
+
+
+### Bug Fixes
+
+* improve error handling ([db70110](https://github.com/juanlugm/concourse-gcs-resource/commit/db70110ae64917679d62764df886b242288f8f43))
+* skip download and unpack options ([2e47d47](https://github.com/juanlugm/concourse-gcs-resource/commit/2e47d47135cef910bc024a0f35fd43850e4c7b4c))
+
 ## [1.0.3](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.2...v1.0.3) (2025-04-10)
 
 
