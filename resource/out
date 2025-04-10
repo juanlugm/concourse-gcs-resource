@@ -36,9 +36,14 @@ if [ "${debug}" = true ] ; then
     >&2 echo "cp \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
 
-gcloud storage cp "$directory/$file" "gs://${bucket}/${versioned_file}"  
+gcloud storage cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"  
 
-
+if [[ "${versioned_file}" == */ ]]; then
+  >&2 echo "Put directory"
+  current_version=gsutil stat $(gsutil ls -l -r "gs://${bucket}/${versioned_file}**" 2>/dev/null grep -v 'TOTAL:' | awk '{print $3}') 2>/dev/null | grep 'Generation:' | awk '{print $2}')
+  echo "{ \"version\": { \"ref\": \"${current_version}\" }}"
+  exit 0
+fi
 gcloud storage objects describe "gs://${bucket}/${versioned_file}" > object_metadata.yml
 
 current_version=$(cat object_metadata.yml | yq .generation)
