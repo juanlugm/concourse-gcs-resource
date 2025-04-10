@@ -31,7 +31,6 @@ export bucket=$(echo $json_input | jq -r .source.bucket )
 export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
 export file=$(echo $json_input | jq -r .params.file )
 
-
 if [ "${debug}" = true ] ; then
     >&2 echo "gcloud cp -r \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
@@ -44,6 +43,7 @@ if [[ "${versioned_file}" == */ ]]; then
   echo "{ \"version\": { \"ref\": \"${current_version}\" }}"
   exit 0
 fi
+
 gcloud storage objects describe "gs://${bucket}/${versioned_file}" > object_metadata.yml
 
 current_version=$(cat object_metadata.yml | yq .generation)
