@@ -1,3 +1,10 @@
+## [1.0.19](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.18...v1.0.19) (2025-04-10)
+
+
+### Bug Fixes
+
+* retrieve version in put ([b6528ea](https://github.com/juanlugm/concourse-gcs-resource/commit/b6528ea200eef87844a9480c40b79cdf988e5304))
+
 ## [1.0.18](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.17...v1.0.18) (2025-04-10)
 
 
