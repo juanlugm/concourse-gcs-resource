@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.17...v1.0.18) (2025-04-10)
+
+
+### Bug Fixes
+
+* error retrieving current version for recursive upload ([b25a5e7](https://github.com/juanlugm/concourse-gcs-resource/commit/b25a5e75bd3b0f24c50e0c2a74c958e039a35707))
+
 ## [1.0.17](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.16...v1.0.17) (2025-04-10)
 
 
