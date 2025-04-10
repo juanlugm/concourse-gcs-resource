@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.4...v1.0.5) (2025-04-10)
+
+
+### Bug Fixes
+
+* improve config handling ([80d04d7](https://github.com/juanlugm/concourse-gcs-resource/commit/80d04d73844f8a3415773e1f896756df8891f932))
+
 ## [1.0.4](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.3...v1.0.4) (2025-04-10)
 
 
