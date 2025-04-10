@@ -64,8 +64,6 @@ a new version of that file.
 
 ### Resource
 
-When the file has the version name in the filename
-
 The file is being [versioned by GCS](https://cloud.google.com/storage/docs/object-versioning)
 
 ``` yaml
@@ -75,6 +73,7 @@ resource_types:
   source:
     repository: juanlugm/concourse-gcs-resource
 
+resources:
 - name: release
   type: gcs
   source:
