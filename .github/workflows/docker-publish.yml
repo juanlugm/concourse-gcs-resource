@@ -1,12 +1,44 @@
-name: Build and Publish Docker image to DockerHub
+name: Semantic Version, Build and Publish Docker image to DockerHub
 
 on:
   push:
     branches:
       - main 
 
+permissions:
+  contents: write   # commits, tags y releases
+
 jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js (required by semantic-release)
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Run semantic-release
+      id: semantic
+      uses: cycjimmy/semantic-release-action@v4.1.0
+      with:
+        extra_plugins: |
+          @semantic-release/changelog
+          @semantic-release/git
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set VERSION env var
+      if: steps.semantic.outputs.new_release_published == 'true'
+      run: echo "VERSION=${{ steps.semantic.outputs.new_release_version }}" >> $GITHUB_ENV
+
+
   build-and-push:
+    needs: release
+    if: needs.release.outputs.new_release_published == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +54,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PAT }}
 
-    - name: Build and Push Image
+    - name: Build and push Docker image with semver tag and latest
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        tags: juanlugm/concourse-gcs-resource:latest
+        tags: |
+          juanlugm/concourse-gcs-resource:${{ env.VERSION }}
+          juanlugm/concourse-gcs-resource:latest
 

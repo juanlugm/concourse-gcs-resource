@@ -6,29 +6,29 @@ export directory=$1
 json_input=$(cat)  # Read JSON input from stdin
 # {
 #     "source": {
-#       "bucket_name": "mybucket",
-#       "object_name": "myobject",
+#       "bucket": "mybucket",
+#       "versioned_file": "myobject",
 #       "debug": true,          
 #     },
 #    "params": {
-#       "src": "path/to/my_local_file.txt"
+#       "file": "path/to/my_local_file.txt"
 #     }
 # }
 
-export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
-export object_path=$(echo $json_input | jq -r .source.object_path )
+export bucket=$(echo $json_input | jq -r .source.bucket )
+export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
 export debug=$(echo $json_input | jq -r .source.debug )
-export src=$(echo $json_input | jq -r .params.src )
+export file=$(echo $json_input | jq -r .params.file )
 
 
 if [ "$debug" = true ] ; then
-    >&2 echo "cp \"$directory/$src\" \"gs://${bucket_name}/${object_path}\""
+    >&2 echo "cp \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
 
-gcloud storage cp "$directory/$src" "gs://${bucket_name}/${object_path}"  
+gcloud storage cp "$directory/$file" "gs://${bucket}/${versioned_file}"  
 
 
-gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
+gcloud storage objects describe "gs://${bucket}/${versioned_file}" > object_metadata.yml
 
 current_version=$(cat object_metadata.yml | yq .generation)
 creation_time=$(cat object_metadata.yml | yq .creation_time)

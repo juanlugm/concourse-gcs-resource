@@ -1,37 +1,62 @@
 #!/bin/bash
 set -e
 
+source "$(dirname "$0")/functions.sh"
+
 export directory=$1
+export filename=$(basename ${versioned_file})
 
 json_input=$(cat)  # Read JSON input from stdin
 # {
 #     "source": {
-#       "bucket_name": "mybucket",
-#       "object_name": "myobject",
-#       "debug": true,          
+#       "bucket": "mybucket",
+#       "versioned_file": "myobject",
+#       "debug": true,  
+#       "initial_version": "some_invented_generic_initial_version"
+#       "initial_content_text": "Some random test to put in your first version"         
+#       "initial_content_binary": "dGVzdAo="    
+#     },
+#     "params": {
+#       "skip_download": true
 #     },
 #     "version": {
 #         "ref": "61cbef"
 #     }
 # }
 
-export bucket_name=$(echo $json_input | jq -r .source.bucket_name )
-export object_path=$(echo $json_input | jq -r .source.object_path )
+export bucket=$(echo $json_input | jq -r .source.bucket )
+export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
 export debug=$(echo $json_input | jq -r .source.debug )
+export initial_version=$(echo $json_input | jq -r .source.initial_version )
+export initial_content_text=$(echo $json_input | jq -r .source.initial_content_text )
+export initial_content_binary=$(echo $json_input | jq -r .source.initial_content_binary )
+export skip_download=$(echo $json_input | jq -r .params.skip_download )
 export version=$(echo $json_input | jq -r .version.ref )
 
 
 if [ "$debug" = true ] ; then
     >&2 echo "In"
     >&2 echo $json_input
-    >&2 echo "gcloud storage objects describe \"gs://${bucket_name}/${object_path}\""
 fi
 
-if [ -z "${version}" ]; then
-    >&2 echo "No previous version. Checking latest"
-    gcloud storage objects describe "gs://${bucket_name}/${object_path}" > object_metadata.yml
-else
-    gcloud storage objects describe "gs://${bucket_name}/${object_path}#${version}" > object_metadata.yml
+gs_url="gs://${bucket}/${versioned_file}"
+
+if [ -n "${version}" ]; then
+    gs_url="${gs_url}#${version}"
+fi
+
+if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
+    if [ -n "${initial_version}"]; then
+        >&2 echo "Failed to retrieve object. Falling back to initial_version"
+        touch $directory/$filename
+        echo "{ \"version\": {\"ref\": \"${initial_version}\"}}"
+        if [ -n "${initial_content_text}"]; then
+            echo "${initial_content_text}" > $directory/$filename
+        elif [ -n "${initial_content_text}"]; then
+            base64 -d <<< "${initial_content_binary}" > $1/$filename
+        fi
+        exit 0
+    fi    
 fi
 
 
@@ -77,6 +102,13 @@ else
 fi
 
 
-#### We also need to download the object to $1 folder.
-
-gcloud storage cp "$storage_url" "$directory"  
+#### We also need to download the object to $1 folder unless we are told the opposite
+if [ -z "${skip_download}" ]; then
+    gcloud storage cp "$storage_url" "$directory"
+    if [ -z "${unpack}" ]; then
+        extract "$directory/$filename" "$directory"
+    fi
+else
+    >&2 echo "Skip download"
+fi
+mv object_metadata.yml $directory
