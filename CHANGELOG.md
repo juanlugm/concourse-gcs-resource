@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.11...v1.0.12) (2025-04-10)
+
+
+### Bug Fixes
+
+* get default content ([e8f2fa2](https://github.com/juanlugm/concourse-gcs-resource/commit/e8f2fa2096758d0594a492d9fd04c6f36a62d5bb))
+
 ## [1.0.11](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.10...v1.0.11) (2025-04-10)
 
 
