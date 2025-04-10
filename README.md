@@ -28,6 +28,8 @@ By default the resource file will be created with no content when `get` runs. Yo
 
 * `initial_content_binary`: *Optional.* You can pass binary content as a base64 encoded string.
 
+**NOTE:** initial_content_text and initial_content_binary are mutually exclusive. If both are provided the file will contain the content text value.
+
 ## Behavior
 
 ### `check`: Extract versions from the bucket.
@@ -54,6 +56,7 @@ Places the following files in the destination:
 Given a file specified by `file`, upload it to the GCS bucket. The new file will be uploaded as
 a new version of that file.
 
+**NOTE:** Known issues. gcloud does not return the object version when pushing new versions. Because of that it is not garanteed that the out ref value is the exact version that has just been pushed, since there is a race condition in the interim between pushing and checking the version. 
 #### Parameters
 
 * `file`: *Required.* Path to the file to upload, provided by an output of a task.
@@ -79,6 +82,18 @@ resources:
   source:
     bucket: releases
     versioned_file: directory_on_gcs/release.tgz
+```
+
+### Resource with initial version
+``` yaml
+resources:
+- name: release
+  type: gcs
+  source:
+    bucket: releases
+    versioned_file: directory_on_gcs/release.tgz
+    initial_version: version_value    # This is not used anywhere other than to allow a first execution with get or trigger a job
+    initial_content_text: some_content_for_the_file  # This will be put in the file for that first job execution
 ```
 
 ### Plan
