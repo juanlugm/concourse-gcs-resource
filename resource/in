@@ -66,8 +66,10 @@ else
         touch $directory/$filename
         echo "{ \"version\": {\"ref\": \"${initial_version}\"}}"
         if [ -n "${initial_content_text}" -a "${initial_content_text}" != "null" ]; then
+            >&2 echo "Populating initial content text"
             echo "${initial_content_text}" > $directory/$filename
-        elif [ -n "${initial_content_text}" ]; then
+        elif [ -n "${initial_content_binary}" -a "${initial_content_binary}" != "null"  ]; then
+            >&2 echo "Populating initial content binary"
             base64 -d <<< "${initial_content_binary}" > $1/$filename
         fi
         exit 0
