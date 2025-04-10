@@ -4,7 +4,7 @@ set -e
 source "$(dirname "$0")/functions.sh"
 
 export directory=$1
-export filename=$(basename ${versioned_file})
+
 
 json_input=$(cat)  # Read JSON input from stdin
 # {
@@ -24,11 +24,18 @@ json_input=$(cat)  # Read JSON input from stdin
 #     }
 # }
 
+>&2 echo "Get ..."
+
+export debug=$(echo $json_input | jq -r .source.debug )
+
+if [ "${debug}" = true ] ; then
+    >&2 cat $json_input
+fi
+
 validate_inputs $json_input && exit 1
 
 export bucket=$(echo $json_input | jq -r .source.bucket )
 export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
-export debug=$(echo $json_input | jq -r .source.debug )
 export initial_version=$(echo $json_input | jq -r .source.initial_version )
 export initial_content_text=$(echo $json_input | jq -r .source.initial_content_text )
 export initial_content_binary=$(echo $json_input | jq -r .source.initial_content_binary )
@@ -36,8 +43,10 @@ export skip_download=$(echo $json_input | jq -r .params.skip_download )
 export version=$(echo $json_input | jq -r .version.ref )
 
 
+export filename=$(basename ${versioned_file})
+
+
 if [ "${debug}" = true ] ; then
-    >&2 echo "In"
     >&2 echo $json_input
 fi
 

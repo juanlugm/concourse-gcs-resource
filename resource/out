@@ -15,11 +15,18 @@ json_input=$(cat)  # Read JSON input from stdin
 #     }
 # }
 
+>&2 echo "Put..."
+
+export debug=$(echo $json_input | jq -r .source.debug )
+
+if [ "${debug}" = true ] ; then
+    >&2 cat $json_input
+fi
+
 validate_inputs $json_input && exit 1
 
 export bucket=$(echo $json_input | jq -r .source.bucket )
 export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
-export debug=$(echo $json_input | jq -r .source.debug )
 export file=$(echo $json_input | jq -r .params.file )
 
 
