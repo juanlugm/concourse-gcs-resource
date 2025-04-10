@@ -23,7 +23,7 @@ if [ "${debug}" = true ] ; then
     >&2 echo $json_input
 fi
 
-validate_inputs $json_input && exit 1
+validate_inputs "$json_input" || exit 1
 
 export bucket=$(echo $json_input | jq -r .source.bucket )
 export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
