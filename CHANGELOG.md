@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.14...v1.0.15) (2025-04-10)
+
+
+### Bug Fixes
+
+* unpack feature ([7b1e184](https://github.com/juanlugm/concourse-gcs-resource/commit/7b1e1844a8ec8aa15622acfcf49bda3bcb29065f))
+
 ## [1.0.14](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.13...v1.0.14) (2025-04-10)
 
 
