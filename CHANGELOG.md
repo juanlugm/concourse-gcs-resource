@@ -1,3 +1,10 @@
+## [1.0.14](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.13...v1.0.14) (2025-04-10)
+
+
+### Bug Fixes
+
+* initial content population defaulted to text ([76793ff](https://github.com/juanlugm/concourse-gcs-resource/commit/76793ff585bd1993ecbd7bd0c5a5f0ac3e277c77))
+
 ## [1.0.13](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.12...v1.0.13) (2025-04-10)
 
 
