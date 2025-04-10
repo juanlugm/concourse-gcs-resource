@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.0...v1.0.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* workflow ([4a0e727](https://github.com/juanlugm/concourse-gcs-resource/commit/4a0e7279d6d8a3fe831c3d21e829880acce75f16))
+
 # 1.0.0 (2025-04-10)
 
 
