@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.7...v1.0.8) (2025-04-10)
+
+
+### Bug Fixes
+
+* source functions in all resource scripts ([68c515b](https://github.com/juanlugm/concourse-gcs-resource/commit/68c515b6a9c9e3a9c2a6e91d2032ea1c4eec214f))
+
 ## [1.0.7](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.6...v1.0.7) (2025-04-10)
 
 
