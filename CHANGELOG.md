@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.5...v1.0.6) (2025-04-10)
+
+
+### Bug Fixes
+
+* Add some validations ([d05a212](https://github.com/juanlugm/concourse-gcs-resource/commit/d05a2126d43b86762e9d0aa1313bdc1e3905af8a))
+
 ## [1.0.5](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.4...v1.0.5) (2025-04-10)
 
 
