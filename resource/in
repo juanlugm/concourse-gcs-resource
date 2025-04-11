@@ -123,7 +123,7 @@ fi
 
 #### We also need to download the object to $1 folder unless we are told the opposite
 
-if [ "${versioned_file}" == */ -a "${version}" == "SKIP_DOWNLOAD" ] ]; then
+if [[ "${versioned_file}" == */ -a "${version}" == "SKIP_DOWNLOAD" ]]; then
         >&2 echo "${versioned_file} is a directory. Skip put verification download"
         exit 0;
 elif [ "${skip_download}"  != true ]; then
