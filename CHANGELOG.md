@@ -1,3 +1,10 @@
+## [1.0.28](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.27...v1.0.28) (2025-04-11)
+
+
+### Bug Fixes
+
+* skip download condition ([e66bc95](https://github.com/juanlugm/concourse-gcs-resource/commit/e66bc95b5df7dfc935743eb9389f00dcfd8c3cee))
+
 ## [1.0.27](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.26...v1.0.27) (2025-04-11)
 
 
