@@ -1,3 +1,10 @@
+## [1.0.27](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.26...v1.0.27) (2025-04-11)
+
+
+### Bug Fixes
+
+* typo ([f5f57e5](https://github.com/juanlugm/concourse-gcs-resource/commit/f5f57e57eb4c85e68adfbb30f4ec48d88e8a612a))
+
 ## [1.0.26](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.25...v1.0.26) (2025-04-11)
 
 
