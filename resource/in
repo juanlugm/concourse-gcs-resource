@@ -52,7 +52,7 @@ if [[ "${versioned_file}" == */ ]]; then
     if [ "${debug}" = true ] ; then
        >&2 echo "Versioned file is a directory. Skiping metadata download"
     fi
-    echo "{ \"version\": {\"ref\": \"DIRECTORY\"}"
+    echo "{ \"version\": {\"ref\": \"DIRECTORY\"}}"
     storage_url=$gs_url
 else
     if [ -n "${version}" ]; then
