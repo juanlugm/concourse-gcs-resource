@@ -1,3 +1,10 @@
+## [1.0.25](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.24...v1.0.25) (2025-04-11)
+
+
+### Bug Fixes
+
+* identify directory download for get ([d9e8970](https://github.com/juanlugm/concourse-gcs-resource/commit/d9e8970f9932dadc9fea815210e1db39b9a44f93))
+
 ## [1.0.24](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.23...v1.0.24) (2025-04-11)
 
 
