@@ -35,7 +35,6 @@ if [ "${debug}" = true ] ; then
     >&2 echo "gcloud cp -r \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
 
-gcloud storage cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"  
 gsutil -m cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"
 
 if [[ "${versioned_file}" == */ ]]; then
