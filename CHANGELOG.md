@@ -1,3 +1,10 @@
+## [1.0.26](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.25...v1.0.26) (2025-04-11)
+
+
+### Bug Fixes
+
+* skip download for put verification step ([cc962c6](https://github.com/juanlugm/concourse-gcs-resource/commit/cc962c66be2d3aea8a770a974b9edc9d32c4c8db))
+
 ## [1.0.25](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.24...v1.0.25) (2025-04-11)
 
 
