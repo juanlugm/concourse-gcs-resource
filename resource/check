@@ -38,9 +38,6 @@ if [[ "${versioned_file}" == */ ]]; then
     echo "[ ]"
 fi
 
-if [ -n "${version}" -a "${version}" != "null" ]; then
-    gs_url="${gs_url}#${version}"
-fi
  >&2 echo "${gs_url}"
 
 if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
