@@ -50,7 +50,7 @@ gs_url="gs://${bucket}/${versioned_file}"
 
 if [[ "${versioned_file}" == */ ]]; then
     if [ "${debug}" = true ] ; then
-       >&2 echo "Versioned file is a directory. Skip metadata download"
+       >&2 echo "Versioned file is a directory. Skiping metadata download"
     fi
     echo "{ \"version\": {\"ref\": \"DIRECTORY\"}"
     storage_url=$gs_url
@@ -114,7 +114,7 @@ else
         { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
         { \"name\": \"size\", \"value\": \"${size}\"} \
         ] }"
-
+        mv object_metadata.yml $directory
     else
         >&2 echo "We are unable to retrieve the metadata for this version. It may not exist anymore"
         exit 1
@@ -123,16 +123,15 @@ fi
 
 #### We also need to download the object to $1 folder unless we are told the opposite
 
-
-if [ "${skip_download}"  != true ]; then
+if [ "${versioned_file}" == */ -a "${version}" == "SKIP_DOWNLOAD" ] ]; then
+        >&2 echo "${versioned_file} is a directory. Skip put verification download"
+        exit 0;
+elif [ "${skip_download}"  != true ]; then
     gcloud storage cp -r "$storage_url" "$directory"
     if [ "${unpack}"  = true ]; then
         extract "$directory/$filename" "$directory"
     fi
-elif [ "${versioned_file}" == */ -a "${version}" == "SKIP_DOWNLOAD" ] ]; then
-        >&2 echo "${versioned_file} is a directory. Skip put verification download"
 else
     >&2 echo "Skip download"
 fi
 
-mv object_metadata.yml $directory
