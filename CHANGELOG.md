@@ -1,3 +1,10 @@
+## [1.0.30](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.29...v1.0.30) (2025-04-11)
+
+
+### Bug Fixes
+
+* check should not use version ([63652b7](https://github.com/juanlugm/concourse-gcs-resource/commit/63652b71f97ed977225294eace4d1ff1914b9f38))
+
 ## [1.0.29](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.28...v1.0.29) (2025-04-11)
 
 
