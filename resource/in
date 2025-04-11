@@ -120,12 +120,17 @@ fi
 
 
 #### We also need to download the object to $1 folder unless we are told the opposite
+
+
 if [ "${skip_download}"  != true ]; then
-    gcloud storage cp "$storage_url" "$directory"
+    gcloud storage cp -r "$storage_url" "$directory"
     if [ "${unpack}"  = true ]; then
         extract "$directory/$filename" "$directory"
     fi
+elif [ "${versioned_file}" == */ -a "${version}" == "SKIP_DOWNLOAD" ] ]; then
+        >&2 echo "${versioned_file} is a directory. Skip put verification download"
 else
     >&2 echo "Skip download"
 fi
+
 mv object_metadata.yml $directory

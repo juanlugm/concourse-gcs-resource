@@ -38,9 +38,9 @@ fi
 gcloud storage cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"  
 
 if [[ "${versioned_file}" == */ ]]; then
-  >&2 echo "Put directory"
-  current_version=$(gsutil stat $(gsutil ls -l -r "gs://${bucket}/${versioned_file}**" 2>/dev/null | grep -v '^TOTAL:' | awk '{print $3}') 2>/dev/null | grep 'Generation:' | tail -n 1 | awk '{print $2}')
-  output_string="{ \"version\": { \"ref\": \"${current_version}\" }}"
+  >&2 echo "Put directory."
+  
+  output_string="{ \"version\": { \"ref\": \"SKIP_DOWNLOAD\" }}"
 
   if [ "${debug}" = true ] ; then
     >&2 echo $output_string

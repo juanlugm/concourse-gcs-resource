@@ -33,6 +33,11 @@ export version=$(echo $json_input | jq -r .version.ref )
 
 gs_url="gs://${bucket}/${versioned_file}"
 
+if [[ "${versioned_file}" == */ ]]; then
+    >&2 echo "Versioned file is a directory. No versions"
+    echo "[ ]"
+fi
+
 if [ -n "${version}" -a "${version}" != "null" ]; then
     gs_url="${gs_url}#${version}"
 fi
