@@ -53,71 +53,78 @@ fi
 
 gs_url="gs://${bucket}/${versioned_file}"
 
-if [ -n "${version}" ]; then
-    gs_url="${gs_url}#${version}"
-fi
-
-if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
+if [ "${versioned_file}" == */ ]; then
     if [ "${debug}" = true ] ; then
-        >&2 cat object_metadata.yml
+       >&2 echo "Versioned file is a directory. Skip metadata download"
     fi
+    echo "{ \"version\": {\"ref\": \"DIRECTORY\"}"
+    storage_url=$gs_url
 else
-    if [ -n "${initial_version}" -a "${initial_version}" != "null" ]; then
-        >&2 echo "Failed to retrieve object. Falling back to initial_version"
-        touch $directory/$filename
-        echo "{ \"version\": {\"ref\": \"${initial_version}\"}}"
-        if [ -n "${initial_content_text}" -a "${initial_content_text}" != "null" ]; then
-            >&2 echo "Populating initial content text"
-            echo "${initial_content_text}" > $directory/$filename
-        elif [ -n "${initial_content_binary}" -a "${initial_content_binary}" != "null"  ]; then
-            >&2 echo "Populating initial content binary"
-            base64 -d <<< "${initial_content_binary}" > $1/$filename
+    if [ -n "${version}" ]; then
+        gs_url="${gs_url}#${version}"
+    fi
+
+    if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
+        if [ "${debug}" = true ] ; then
+            >&2 cat object_metadata.yml
         fi
-        exit 0
     else
-      >&2 echo "Failed to retrieve object metadata and there is no initial version specified in source"
-      exit 1
-    fi    
+        if [ -n "${initial_version}" -a "${initial_version}" != "null" ]; then
+            >&2 echo "Failed to retrieve object. Falling back to initial_version"
+            touch $directory/$filename
+            echo "{ \"version\": {\"ref\": \"${initial_version}\"}}"
+            if [ -n "${initial_content_text}" -a "${initial_content_text}" != "null" ]; then
+                >&2 echo "Populating initial content text"
+                echo "${initial_content_text}" > $directory/$filename
+            elif [ -n "${initial_content_binary}" -a "${initial_content_binary}" != "null"  ]; then
+                >&2 echo "Populating initial content binary"
+                base64 -d <<< "${initial_content_binary}" > $1/$filename
+            fi
+            exit 0
+        else
+        >&2 echo "Failed to retrieve object metadata and there is no initial version specified in source"
+        exit 1
+        fi    
+    fi
+
+
+    #### And the output will be
+    #
+    # {
+    #   "version": { "ref": "61cebf" },
+    #   "metadata": [
+    #     { "name": "commit", "value": "61cebf" },
+    #     { "name": "author", "value": "Hulk Hogan" }
+    #   ]
+    # }
+    #
+
+
+    current_version=$(cat object_metadata.yml | yq .generation)
+    creation_time=$(cat object_metadata.yml | yq .creation_time)
+    update_time=$(cat object_metadata.yml | yq .update_time)
+    md5_hash=$(cat object_metadata.yml | yq .md5_hash)
+    metageneration=$(cat object_metadata.yml | yq .metageneration)
+    storage_url=$(cat object_metadata.yml | yq .storage_url)
+    size=$(cat object_metadata.yml | yq .size)
+
+
+    if [ "$(cat object_metadata.yml | yq .generation)" == "$version" ]; then
+        echo "{ \"version\": {\"ref\": \"${version}\"}, \
+        \"metadata\": [ \
+        { \"name\": \"creation_time\", \"value\": \"${creation_time}\"}, \
+        { \"name\": \"update_time\", \"value\": \"${update_time}\"}, \
+        { \"name\": \"md5_hash\", \"value\": \"${md5_hash}\"}, \
+        { \"name\": \"metageneration\", \"value\": \"${metageneration}\"}, \
+        { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
+        { \"name\": \"size\", \"value\": \"${size}\"} \
+        ] }"
+
+    else
+        >&2 echo "We are unable to retrieve the metadata for this version. It may not exist anymore"
+        exit 1
+    fi
 fi
-
-
-#### And the output will be
-#
-# {
-#   "version": { "ref": "61cebf" },
-#   "metadata": [
-#     { "name": "commit", "value": "61cebf" },
-#     { "name": "author", "value": "Hulk Hogan" }
-#   ]
-# }
-#
-
-
-current_version=$(cat object_metadata.yml | yq .generation)
-creation_time=$(cat object_metadata.yml | yq .creation_time)
-update_time=$(cat object_metadata.yml | yq .update_time)
-md5_hash=$(cat object_metadata.yml | yq .md5_hash)
-metageneration=$(cat object_metadata.yml | yq .metageneration)
-storage_url=$(cat object_metadata.yml | yq .storage_url)
-size=$(cat object_metadata.yml | yq .size)
-
-
-if [ "$(cat object_metadata.yml | yq .generation)" == "$version" ]; then
-    echo "{ \"version\": {\"ref\": \"${version}\"}, \
-    \"metadata\": [ \
-    { \"name\": \"creation_time\", \"value\": \"${creation_time}\"}, \
-    { \"name\": \"update_time\", \"value\": \"${update_time}\"}, \
-    { \"name\": \"md5_hash\", \"value\": \"${md5_hash}\"}, \
-    { \"name\": \"metageneration\", \"value\": \"${metageneration}\"}, \
-    { \"name\": \"storage_url\", \"value\": \"${storage_url}\"}, \
-    { \"name\": \"size\", \"value\": \"${size}\"} \
-    ] }"
-
-else
-    >&2 echo "We are unable to retrieve the metadata for this version. It may not exist anymore"
-    exit 1
-fi
-
 
 #### We also need to download the object to $1 folder unless we are told the opposite
 
