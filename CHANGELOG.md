@@ -1,3 +1,10 @@
+## [1.0.29](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.28...v1.0.29) (2025-04-11)
+
+
+### Bug Fixes
+
+* in output ([bb15480](https://github.com/juanlugm/concourse-gcs-resource/commit/bb154807b12c1b7248e43ec507cee5c753308e9b))
+
 ## [1.0.28](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.27...v1.0.28) (2025-04-11)
 
 
