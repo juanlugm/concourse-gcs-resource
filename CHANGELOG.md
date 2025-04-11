@@ -1,3 +1,10 @@
+## [1.0.23](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.22...v1.0.23) (2025-04-11)
+
+
+### Bug Fixes
+
+* allow get after put in recursive mode ([54b1d90](https://github.com/juanlugm/concourse-gcs-resource/commit/54b1d9055e87a3a5a8fa67f25b5141df29b7d860))
+
 ## [1.0.22](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.21...v1.0.22) (2025-04-10)
 
 
