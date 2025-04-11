@@ -46,14 +46,9 @@ export version=$(echo $json_input | jq -r .version.ref )
 
 export filename=$(basename ${versioned_file})
 
-
-if [ "${debug}" = true ] ; then
-    >&2 echo $json_input
-fi
-
 gs_url="gs://${bucket}/${versioned_file}"
 
-if [ "${versioned_file}" == */ ]; then
+if [[ "${versioned_file}" == */ ]]; then
     if [ "${debug}" = true ] ; then
        >&2 echo "Versioned file is a directory. Skip metadata download"
     fi
