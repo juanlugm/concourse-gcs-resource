@@ -36,6 +36,7 @@ if [ "${debug}" = true ] ; then
 fi
 
 gcloud storage cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"  
+gsutil -m cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"
 
 if [[ "${versioned_file}" == */ ]]; then
   >&2 echo "Put directory."
