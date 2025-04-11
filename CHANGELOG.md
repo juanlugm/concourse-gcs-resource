@@ -1,3 +1,11 @@
+## [1.0.31](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.30...v1.0.31) (2025-04-11)
+
+
+### Bug Fixes
+
+* switch put to gsutil to support larger files ([2992785](https://github.com/juanlugm/concourse-gcs-resource/commit/299278545914cc1b9b8f972359d440992b5da7e5))
+* switch put to gsutil to support larger files ([c41fdca](https://github.com/juanlugm/concourse-gcs-resource/commit/c41fdca6c73039ed0f38d053add7160a692fb0af))
+
 ## [1.0.30](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.29...v1.0.30) (2025-04-11)
 
 
