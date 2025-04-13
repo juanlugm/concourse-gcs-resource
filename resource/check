@@ -38,7 +38,7 @@ if [[ "${versioned_file}" == */ ]]; then
     echo "[ ]"
 fi
 
- >&2 echo "${gs_url}"
+>&2 echo "${gs_url}"
 
 if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
     if [ "${debug}" = true ] ; then

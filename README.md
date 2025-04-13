@@ -16,6 +16,35 @@ version numbers.
   you can keep the file name the same and upload new versions of your file. This property is the path to the file
   in your GCS bucket.
 
+#### Dealing with directories rather than files
+
+  *** NOTE *** You can configure it to download or put a path rather than a file. This means, it may not work with object names ending with / (I haven't tested), but I think it is worth the downside. 
+
+When your `versioned_file` is a path (ends with /), the get step will skip the metadata download (will not show any version in the UI) and will download the whole content of that path (latest versions).
+
+Similarly, if you configure put to use a path source ending with / or using *, it will upload all those files to the specified path. The subsequent get step will default to NOOP because it would otherwise need to validate every single upload. You will see some "DIRECTORY" or "SKIP_DOWNLOAD" references which help the resource understand there is nothing to do in that step.
+
+For example
+
+```yaml
+resources:
+- name: all-releases
+  type: gcs
+  source:
+    bucket: releases
+    versioned_file: directory_on_gcs/
+```
+
+``` yaml
+- get: all-releases
+```
+
+``` yaml
+- put: all-releases
+  params:
+    file: path/to/releases/*
+```
+
 ### Initial state
 
 If no resource versions exist you can set up this resource to emit an initial version with a specified content. This won't create a real resource in S3 but only create an initial version for Concourse. The resource file will be created as usual when you `get` a resource with an initial version.
