@@ -71,6 +71,7 @@ size=$(cat object_metadata.yml | yq .size)
 output_string="{
   \"version\": { \"ref\": \"${current_version}\" },
   \"metadata\": [
+    { \"name\": \"generation\", \"value\": \"${current_version}\"}, \
     { \"name\": \"creation_time\", \"value\": \"${creation_time}\"}, \
     { \"name\": \"update_time\", \"value\": \"${update_time}\"}, \
     { \"name\": \"md5_hash\", \"value\": \"${md5_hash}\"}, \
