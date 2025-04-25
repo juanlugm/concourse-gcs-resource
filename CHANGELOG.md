@@ -1,3 +1,12 @@
+## [1.0.32](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.31...v1.0.32) (2025-04-25)
+
+
+### Bug Fixes
+
+* expose object generation in metadata ([3e8b7d7](https://github.com/juanlugm/concourse-gcs-resource/commit/3e8b7d72502b8ce010f7ab3f6ac01ccdc1009c54))
+* expose object generation in metadata ([d5bd0bb](https://github.com/juanlugm/concourse-gcs-resource/commit/d5bd0bb2d96a2c46f126c0d881ce5da30ab20181))
+* improve directory mode documentation ([dec533f](https://github.com/juanlugm/concourse-gcs-resource/commit/dec533f597da15f43508466d563b81c8bc14489c))
+
 ## [1.0.31](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.30...v1.0.31) (2025-04-11)
 
 
