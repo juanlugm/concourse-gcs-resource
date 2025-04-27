@@ -1,3 +1,10 @@
+## [1.0.34](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.33...v1.0.34) (2025-04-27)
+
+
+### Bug Fixes
+
+* bug. escaping quotes ([6616afa](https://github.com/juanlugm/concourse-gcs-resource/commit/6616afacafb88c1f89393af114939d67f856b02a))
+
 ## [1.0.33](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.32...v1.0.33) (2025-04-27)
 
 
