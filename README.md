@@ -8,9 +8,11 @@ version numbers.
 
 ## Source Configuration
 
+### Bucket details
+
 * `bucket`: *Required.* The name of the bucket.
 
-### File Names
+### Files or Paths
 
 * `versioned_file`: *Required* versioning must be enabled for your GCS bucket then
   you can keep the file name the same and upload new versions of your file. This property is the path to the file
@@ -58,6 +60,9 @@ By default the resource file will be created with no content when `get` runs. Yo
 * `initial_content_binary`: *Optional.* You can pass binary content as a base64 encoded string.
 
 **NOTE:** initial_content_text and initial_content_binary are mutually exclusive. If both are provided the file will contain the content text value.
+
+### Debug mode
+* `debug`: *Optional.* Default false. It enables additional logging.
 
 ## Behavior
 
