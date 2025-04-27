@@ -1,3 +1,10 @@
+## [1.0.33](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.32...v1.0.33) (2025-04-27)
+
+
+### Bug Fixes
+
+* Return placeholder check value for directories. Until we implement directory versions ([82581a1](https://github.com/juanlugm/concourse-gcs-resource/commit/82581a11e00e4bce98ef7efec439c8836c6f05be))
+
 ## [1.0.32](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.31...v1.0.32) (2025-04-25)
 
 
