@@ -35,7 +35,8 @@ gs_url="gs://${bucket}/${versioned_file}"
 
 if [[ "${versioned_file}" == */ ]]; then
     >&2 echo "Versioned file is a directory. No versions"
-    echo "[ ]"
+    echo "[ { "ref": "Directory" } ]"
+    exit
 fi
 
 >&2 echo "${gs_url}"
