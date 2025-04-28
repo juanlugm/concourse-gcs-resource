@@ -1,3 +1,10 @@
+## [1.0.35](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.34...v1.0.35) (2025-04-28)
+
+
+### Bug Fixes
+
+* check directory to always generate a new version ([d5c832c](https://github.com/juanlugm/concourse-gcs-resource/commit/d5c832c23f3e81c11d17be91b241476d588ecd79))
+
 ## [1.0.34](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.33...v1.0.34) (2025-04-27)
 
 
