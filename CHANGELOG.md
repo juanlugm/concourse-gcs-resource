@@ -1,3 +1,10 @@
+## [1.0.36](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.35...v1.0.36) (2025-04-28)
+
+
+### Bug Fixes
+
+* bad substitution ([5d27143](https://github.com/juanlugm/concourse-gcs-resource/commit/5d27143ae29e537eb1d2612d87298e2db0460362))
+
 ## [1.0.35](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.34...v1.0.35) (2025-04-28)
 
 
