@@ -1,3 +1,10 @@
+## [1.0.37](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.36...v1.0.37) (2026-05-21)
+
+
+### Bug Fixes
+
+* export gcloud sdk to path ([1f15f3d](https://github.com/juanlugm/concourse-gcs-resource/commit/1f15f3d5c4ab4735b7d382618ac88e1ddd3b1f36))
+
 ## [1.0.36](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.35...v1.0.36) (2025-04-28)
 
 
