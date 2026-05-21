@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+export PATH="/google-cloud-sdk/bin:$PATH"
 source "$(dirname "$0")/functions.sh"
 
 export directory=$1
