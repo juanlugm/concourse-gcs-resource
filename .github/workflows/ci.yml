@@ -15,18 +15,19 @@ jobs:
         command: "-scheme http"
         ports:
           - 4443:4443
-        options: >-
-          --health-cmd="curl -f http://localhost:4443/ || exit 1" --health-interval=5s --health-timeout=2s --health-retries=3
     steps:
       - uses: actions/checkout@v4
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: 1.20
-      - name: Wait for fake-gcs
+      - name: Wait for fake-gcs port
         run: |
-          for i in {1..10}; do
-            if curl -sS http://localhost:4443/ >/dev/null; then echo ok; exit 0; fi
+          for i in {1..20}; do
+            if bash -c 'cat < /dev/tcp/localhost/4443 > /dev/null 2>&1'; then
+              echo 'fake-gcs port is open'
+              exit 0
+            fi
             sleep 1
           done
           exit 1
