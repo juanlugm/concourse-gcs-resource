@@ -1,7 +1,5 @@
 #!/bin/bash
 set -e
-export PATH="/google-cloud-sdk/bin:$PATH"
-
 source "$(dirname "$0")/functions.sh"
 
 export directory=$1
@@ -33,10 +31,10 @@ export versioned_file=$(echo $json_input | jq -r .source.versioned_file )
 export file=$(echo $json_input | jq -r .params.file )
 
 if [ "${debug}" = true ] ; then
-    >&2 echo "gsutil -m cp -r \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
+  >&2 echo "/opt/resource/gcs upload \"$directory/$file\" \"gs://${bucket}/${versioned_file}\""
 fi
 
-gsutil -m cp -r "$directory/$file" "gs://${bucket}/${versioned_file}"
+/opt/resource/gcs upload "$directory/$file" "gs://${bucket}/${versioned_file}"
 
 if [[ "${versioned_file}" == */ ]]; then
   >&2 echo "Put directory."
@@ -51,15 +49,18 @@ if [[ "${versioned_file}" == */ ]]; then
   exit 0
 fi
 
-gcloud storage objects describe "gs://${bucket}/${versioned_file}" > object_metadata.yml
-
-current_version=$(cat object_metadata.yml | yq .generation)
-creation_time=$(cat object_metadata.yml | yq .creation_time)
-update_time=$(cat object_metadata.yml | yq .update_time)
-md5_hash=$(cat object_metadata.yml | yq .md5_hash)
-metageneration=$(cat object_metadata.yml | yq .metageneration)
-storage_url=$(cat object_metadata.yml | yq .storage_url)
-size=$(cat object_metadata.yml | yq .size)
+if /opt/resource/gcs describe "gs://${bucket}/${versioned_file}" > object_metadata.json; then
+  current_version=$(jq -r .generation object_metadata.json)
+  creation_time=$(jq -r .creation_time object_metadata.json)
+  update_time=$(jq -r .update_time object_metadata.json)
+  md5_hash=$(jq -r .md5_hash object_metadata.json)
+  metageneration=$(jq -r .metageneration object_metadata.json)
+  storage_url=$(jq -r .storage_url object_metadata.json)
+  size=$(jq -r .size object_metadata.json)
+else
+  >&2 echo "Failed to describe uploaded object"
+  exit 1
+fi
 
 # {
 #   "version": { "ref": "61cebf" },

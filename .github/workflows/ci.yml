@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      fake-gcs:
+        image: fsouza/fake-gcs-server:latest
+        ports:
+          - 4443:4443
+        options: >-
+          --health-cmd="curl -f http://localhost:4443/ || exit 1" --health-interval=5s --health-timeout=2s --health-retries=3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.20
+      - name: Wait for fake-gcs
+        run: |
+          for i in {1..10}; do
+            if curl -sS http://localhost:4443/ >/dev/null; then echo ok; exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Run tests
+        env:
+          STORAGE_EMULATOR_HOST: http://localhost:4443
+          GOOGLE_CLOUD_PROJECT: test-project
+        run: |
+          go test ./... -v
+      - name: Build Docker image (verify build and size)
+        run: |
+          docker build -t concourse-gcs-resource:ci .
+          docker images concourse-gcs-resource:ci --format 'SIZE: {{.Size}}'

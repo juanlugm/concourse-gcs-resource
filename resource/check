@@ -1,5 +1,4 @@
 #!/bin/bash
-export PATH="/google-cloud-sdk/bin:$PATH"
 source "$(dirname "$0")/functions.sh"
 
 json_input=$(cat)  # Read JSON input from stdin
@@ -41,11 +40,11 @@ fi
 
 >&2 echo "${gs_url}"
 
-if gcloud storage objects describe "${gs_url}" > object_metadata.yml; then
+if /opt/resource/gcs describe "${gs_url}" > object_metadata.json; then
     if [ "${debug}" = true ] ; then
-        >&2 cat object_metadata.yml
+        >&2 cat object_metadata.json
     fi
-    current_version=$(cat object_metadata.yml | yq .generation)
+    current_version=$(jq -r .generation object_metadata.json)
 else
     if [ -n "${initial_version}"  -a "${initial_version}" != "null" ]; then
       >&2 echo "Failed to retrieve object. Falling back to initial_version"
