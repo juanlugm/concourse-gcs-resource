@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.37...v1.1.0) (2026-06-15)
+
+
+### Features
+
+* refactor to minimise image size. Migrate to go cli ([5106029](https://github.com/juanlugm/concourse-gcs-resource/commit/51060291f81c93d51accd79362623c4720fd920e))
+
 ## [1.0.37](https://github.com/juanlugm/concourse-gcs-resource/compare/v1.0.36...v1.0.37) (2026-05-21)
 
 
