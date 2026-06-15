@@ -12,6 +12,7 @@ jobs:
     services:
       fake-gcs:
         image: fsouza/fake-gcs-server:latest
+        command: ["-scheme", "http"]
         ports:
           - 4443:4443
         options: >-
